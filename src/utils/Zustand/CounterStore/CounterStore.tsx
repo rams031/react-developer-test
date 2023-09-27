@@ -12,16 +12,15 @@ const counterObject: counterObjectType = {
 
 // Manipulate Counter Data Action 
 const manipulateCounterAction = (set: SetState<counterState>, get: GetState<counterState>, action: string, element: "firstCounter" | "secondCounter") => {
-    // Set Counter Value Into Variable
-    const firstCounterData: number = counterStore.getState()?.firstCounter;
-    const secondCounterValue: number = counterStore.getState()?.secondCounter;
-    const counterCondition: number = element === "firstCounter" ? firstCounterData : secondCounterValue;
+    // Counter Existing Value
+    const counterValue = get()[element];
 
+    // Set Counter Value Into Variable
     switch (action) {
         case "INCREMENT_COUNTER":
-            return set({ [element]: counterCondition + 1 })
+            return set({ [element]: counterValue + 1 })
         case "DECREMENT_COUNTER":
-            return counterCondition > 0 && set({ [element]: get()[element] - 1 })
+            return get()[element] > 0 && set({ [element]: counterValue - 1 })
         case "RESET_COUNTER":
             return set({ [element]: 0 })
     }

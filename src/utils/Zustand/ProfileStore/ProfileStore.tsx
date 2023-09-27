@@ -28,6 +28,7 @@ const userDetailFormObject: profileDetailsType = {
     updatedDate: ""
 }
 
+// Function HTTP Condition (If called)
 const httpServiceAction = (props: httpTypes) => {
     const { set, action, id, params } = props
 
@@ -45,7 +46,7 @@ const httpServiceAction = (props: httpTypes) => {
     }
 }
 
-// Get User Data List Action (Service)
+// Get Profile Data List Action (Service)
 const fetchUserDataAction = async (set: SetState<profileState>): Promise<void> => {
     try {
         const response: void | AxiosResponse<any, any> = await getService("/user/");
@@ -56,7 +57,7 @@ const fetchUserDataAction = async (set: SetState<profileState>): Promise<void> =
     }
 }
 
-// Get User Data List Action (Service)
+// Get Profile Data List Action (Service)
 const fetchUserDataWithIDAction = async (set: SetState<profileState>, id?: string): Promise<void> => {
     try {
         const response: void | AxiosResponse<any, any> = await getService("/user/" + id);
@@ -120,7 +121,7 @@ const deleteUserProfileDataAction = async (id?: string): Promise<void> => {
 const createProfileStore = create<profileState>((set: SetState<profileState>) => ({
     // Profile Object
     profileData: userDetailFormObject,
-    // Profile HTTP Service
+    // Profile Function
     profileService: ({ action, id, params }) => httpServiceAction({ set, action, id, params })
 }));
 

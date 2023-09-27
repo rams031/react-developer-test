@@ -5,6 +5,7 @@ import { getService } from "../../../service/API/HttpService/HttpService";
 // Types
 import { responseType, userState } from "./UserStoreTypes";
 
+// Get User Data List Action (Service)
 const getUserDataAction = async (set: SetState<userState>): Promise<void | boolean> => {
     try {
         const response: void | AxiosResponse<responseType> = await getService('/user?limit=9');
@@ -17,9 +18,9 @@ const getUserDataAction = async (set: SetState<userState>): Promise<void | boole
 }
 
 const createUserStore = create<userState>((set: SetState<userState>) => ({
-    // // User Object
+    // User Object
     userData: null,
-    // // User HTTP Service
+    // User Function
     getUserDataAction: () => getUserDataAction(set)
 }));
 

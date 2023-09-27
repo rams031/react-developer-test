@@ -23,29 +23,29 @@ export const Toast = Swal.mixin({
 export const getService = async (pathName: string): Promise<void | AxiosResponse<any, any>> => {
     return API.get(pathName)
         .then((response: AxiosResponse) => response)
-        .catch((error: AxiosError<errorResultType, any> | undefined) => apiErrorAlert(error));
+        .catch((error: AxiosError<errorResultType> | undefined) => apiErrorAlert(error));
 }
 
 export const postService = async (pathName: string, paramValue: any): Promise<void | AxiosResponse<any, any>> => {
     return API.post(pathName, paramValue)
         .then((response: AxiosResponse) => response)
-        .catch((error: AxiosError<errorResultType, any> | undefined) => apiErrorAlert(error));
+        .catch((error: AxiosError<errorResultType> | undefined) => apiErrorAlert(error));
 }
 
 export const putService = async (pathName: string, paramValue: any): Promise<void | AxiosResponse<any, any>> => {
     return API.put(pathName, paramValue)
         .then((response: AxiosResponse) => response)
-        .catch((error: AxiosError<errorResultType, any> | undefined) => apiErrorAlert(error));
+        .catch((error: AxiosError<errorResultType> | undefined) => apiErrorAlert(error));
 }
 
 export const deleteService = async (pathName: string): Promise<void | AxiosResponse<any, any>> => {
     return API.delete(pathName)
         .then((response: AxiosResponse) => response)
-        .catch((error: AxiosError<errorResultType, any> | undefined) => apiErrorAlert(error));
+        .catch((error: AxiosError<errorResultType> | undefined) => apiErrorAlert(error));
 }
 
 // Error Catcher Alerts
-const apiErrorAlert = (error: AxiosError<errorResultType, any> | undefined) => {
+const apiErrorAlert = (error: AxiosError<errorResultType> | undefined) => {
     const errorResult = error?.response?.data;
     
     switch (error?.response?.status) {

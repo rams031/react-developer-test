@@ -18,7 +18,7 @@ const UserList: FC = () => {
     // Local State
     const { userData, getUserDataAction } = userStore((state) => state, shallow)
 
-    // Pre Fetch Request
+    // Pre Fetch Global User Data
     useEffect(() => {
         getUserDataAction()
         // eslint-disable-next-line

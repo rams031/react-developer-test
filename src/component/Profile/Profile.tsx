@@ -21,7 +21,7 @@ const Profile: FC = () => {
     // Global State 
     const { profileData, profileService } = profileStore((state) => state, shallow);
 
-    // Pre Fetch Data Profile Data
+    // Pre Fetch Global Profile Data
     useEffect(() => {
         if (profileId) { profileService({ action: "FETCH_PROFILE_DATA", id: profileId }) }
         // eslint-disable-next-line
