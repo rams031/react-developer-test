@@ -6,6 +6,7 @@ import { Toast, deleteService, getService, postService, putService } from '../..
 
 // Types
 import { httpTypes, profileDetailsType, profileState } from "./ProfileStoreTypes";
+import moment from "moment";
 
 // Initial State
 const userDetailFormObject: profileDetailsType = {
@@ -30,7 +31,7 @@ const userDetailFormObject: profileDetailsType = {
 
 // Function HTTP Condition (If called)
 const httpServiceAction = (props: httpTypes) => {
-    const { set, action, id, params } = props
+    const { set, action, id, params, afterAction } = props || {}
 
     switch (action) {
         case "FETCH_USER_LIST_DATA":
@@ -38,11 +39,11 @@ const httpServiceAction = (props: httpTypes) => {
         case "FETCH_PROFILE_DATA":
             return fetchUserDataWithIDAction(set, id)
         case "CREATE_PROFILE_DATA":
-            return createUserProfileDataAction(params)
+            return createUserProfileDataAction(params, afterAction)
         case "UPDATE_PROFILE_DATA":
             return updateUserProfileDataAction(id, params)
         case "DELETE_PROFILE_DATA":
-            return deleteUserProfileDataAction(id)
+            return deleteUserProfileDataAction(id, afterAction)
     }
 }
 
@@ -62,7 +63,10 @@ const fetchUserDataWithIDAction = async (set: SetState<profileState>, id?: strin
     try {
         const response: void | AxiosResponse<any, any> = await getService("/user/" + id);
         const results: profileDetailsType = response?.data;
-        if (response?.status === 200) return set({ profileData: results })
+        const reassignResult = { ...results, dateOfBirth: moment(results?.dateOfBirth).format("YYYY-MM-DD"), }
+        console.log("🚀 ~ file: ProfileStore.tsx:67 ~ fetchUserDataWithIDAction ~ reassignResult:", reassignResult)
+
+        if (response?.status === 200) return set({ profileData: reassignResult })
         return set({ profileData: null })
     } catch (error) {
         console.error("Http Request Error: " + error)
@@ -71,19 +75,19 @@ const fetchUserDataWithIDAction = async (set: SetState<profileState>, id?: strin
 }
 
 // Create Profile Data Action (API)
-const createUserProfileDataAction = async (params: profileDetailsType | undefined): Promise<void> => {
+const createUserProfileDataAction = async (params: profileDetailsType | undefined, afterAction?: (() => void) | undefined | void): Promise<void> => {
 
-    const configuredParams = {
+    const configuredParams: profileDetailsType = {
         firstName: params?.firstName,
         lastName: params?.lastName,
         email: params?.email
     }
 
     try {
-        const response: void | AxiosResponse<any, any> = await postService("/user/create", configuredParams);
+        const response: void | AxiosResponse = await postService("/user/create", configuredParams);
         if (response?.status === 200) {
             Toast.fire({ icon: "success", title: "User Data Created" });
-            // return navigate("/")
+            if (afterAction) return afterAction();
         }
     } catch (error) {
         console.error("Http Request Error: " + error)
@@ -101,7 +105,7 @@ const updateUserProfileDataAction = async (id?: string, params?: profileDetailsT
 }
 
 // Update Profile Data Action
-const deleteUserProfileDataAction = async (id?: string): Promise<void> => {
+const deleteUserProfileDataAction = async (id?: string, afterAction?: (() => void) | undefined | void): Promise<void> => {
     const revalidateUserList = (): Promise<void> => {
         const getUserListConfig: serviceTypes = { action: "FETCH_USER_LIST_DATA" };
         return profileStore.getState().profileService(getUserListConfig);
@@ -112,6 +116,7 @@ const deleteUserProfileDataAction = async (id?: string): Promise<void> => {
         if (response?.status === 200) {
             revalidateUserList()
             Toast.fire({ icon: "success", title: "User Data Deleted" });
+            if (afterAction) return afterAction()
         }
     } catch (error) {
         console.error("Http Request Error: " + error)

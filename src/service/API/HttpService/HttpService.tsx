@@ -19,25 +19,28 @@ export const Toast = Swal.mixin({
     timerProgressBar: false,
 });
 
-// Get HTTP Request Action
+// Get HTTP Request Action With Catcher
 export const getService = async (pathName: string): Promise<void | AxiosResponse<any, any>> => {
     return API.get(pathName)
         .then((response: AxiosResponse) => response)
         .catch((error: AxiosError<errorResultType> | undefined) => apiErrorAlert(error));
 }
 
+// Post HTTP Request Action With Catcher
 export const postService = async (pathName: string, paramValue: any): Promise<void | AxiosResponse<any, any>> => {
     return API.post(pathName, paramValue)
         .then((response: AxiosResponse) => response)
         .catch((error: AxiosError<errorResultType> | undefined) => apiErrorAlert(error));
 }
 
+// Put HTTP Request Action With Catcher
 export const putService = async (pathName: string, paramValue: any): Promise<void | AxiosResponse<any, any>> => {
     return API.put(pathName, paramValue)
         .then((response: AxiosResponse) => response)
         .catch((error: AxiosError<errorResultType> | undefined) => apiErrorAlert(error));
 }
 
+// Delete HTTP Request Action With Catcher
 export const deleteService = async (pathName: string): Promise<void | AxiosResponse<any, any>> => {
     return API.delete(pathName)
         .then((response: AxiosResponse) => response)

@@ -6,7 +6,6 @@ import shallow from 'zustand/shallow';
 import Loader from '../HOC/Loader/Loader'
 import Button from '../Button/Button';
 import UpdateForm from './Form/UpdateForm/UpdateForm';
-import CreateForm from './Form/CreateForm/CreateForm';
 
 // Zustand Component
 import { profileStore } from '../../utils/Zustand/ProfileStore/ProfileStore';
@@ -36,15 +35,6 @@ const Profile: FC = () => {
         ) : null
     }
 
-    // Create Profile Form Display (if params dont exist)
-    const createProfileForm = () => {
-        return !profileId ? (
-            <div className='card'>
-                <CreateForm />
-            </div>
-        ) : null
-    }
-
     // Error Result Display 
     const errorResultDisplay = () => {
         return profileId && !profileData ? (
@@ -58,11 +48,16 @@ const Profile: FC = () => {
     // Back Navigation Option Display 
     const backNavigationOption = () => {
         return (
-            <div className='flex justify-start items-center py-2'>
+            <div className='flex justify-between items-center py-2'>
                 <Button
                     buttonStyle={"dark"}
                     buttonTitle={"Back"}
                     buttonAction={() => navigate(-1)}
+                />
+                <Button
+                    buttonStyle={"danger"}
+                    buttonTitle={"Delete Profile"}
+                    buttonAction={() => profileService({ action: "DELETE_PROFILE_DATA", id: profileId, afterAction: navigate("/")  })}
                 />
             </div>
         )
@@ -72,7 +67,6 @@ const Profile: FC = () => {
         <div className='min-h-screen flex flex-col'>
             {backNavigationOption()}
             {errorResultDisplay()}
-            {createProfileForm()}
             {updateProfileForm()}
         </div>
     )

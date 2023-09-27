@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect } from 'react'
+import React, { FC, ReactElement, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import shallow from 'zustand/shallow';
 
@@ -11,12 +11,18 @@ import { userStore } from '../../utils/Zustand/UserStore/UserStore';
 
 // Types
 import { userDataType } from './UserListTypes';
+import CreateForm from '../Profile/Form/CreateForm/CreateForm';
+import { profileStore } from '../../utils/Zustand/ProfileStore/ProfileStore';
 
 const UserList: FC = () => {
     const navigate = useNavigate();
 
+    // Global State
+    const { userData, getUserDataAction } = userStore((state) => state, shallow);
+    const { profileService } = profileStore((state) => state, shallow);
+
     // Local State
-    const { userData, getUserDataAction } = userStore((state) => state, shallow)
+    const [createView, setCreateView] = useState<boolean>(false);
 
     // Pre Fetch Global User Data
     useEffect(() => {
@@ -61,20 +67,39 @@ const UserList: FC = () => {
             )
         }
 
-        return userData ? (
+        return userData && !createView ? (
             <div className='grid grid-cols-3 gap-2'>{(userData ?? []).map(displayUserDetails)}</div>
+        ) : null
+    }
+
+    // Create Profile Form Display
+    const createProfileForm = () => {
+        return createView ? (
+            <div className='card'>
+                <CreateForm setCreateView={setCreateView} />
+            </div>
         ) : null
     }
 
     // User List Component Title Label
     const userListTitle = () => {
-        return (
-            <div className='text-xl font-semibold'>User List</div>
-        )
+        // Button Create User Form
+        const CreateUserButtonPropsContainer: buttonProps = {
+            buttonStyle: "primary",
+            buttonTitle: "Create User",
+            buttonAction: () => setCreateView(!createView)
+        }
+
+        return !createView ? (
+            <div className='flex flex-row justify-end items-center'>
+                <Button {...CreateUserButtonPropsContainer} />
+            </div>
+        ) : null
     }
 
     return (
         <div>
+            {createProfileForm()}
             {userListTitle()}
             {UserListData()}
         </div>

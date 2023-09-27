@@ -1,7 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const baseUrl: any | string = process.env.REACT_APP_API_PATH
-const appId: any | string = process.env.REACT_APP_API_ID;
+// API Path
+const baseUrl: string = "https://dummyapi.io/data/v1/";
+
+// API Header (Required)
+const appId: string = "65080fec01538513690ca63e";
 
 const axiosConfig: AxiosRequestConfig = {
     baseURL: baseUrl,

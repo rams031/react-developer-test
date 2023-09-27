@@ -19,21 +19,21 @@ const Counter: FC<propsType> = (props) => {
 
     // Manipulate Counter Action Form
     const incrementDecrementOperationForm = () => {
-        // Counter Increment Props 
+        // Button Counter Increment Props 
         const incrementButtonPropsContainer: buttonProps = {
             buttonStyle: "primary",
             buttonTitle: "Increment",
             buttonAction: () => counterStoreObject.manipulateCounterAction("INCREMENT_COUNTER", element)
         }
 
-        // Counter Decrement Props 
+        // Button Counter Decrement Props 
         const decrementButtonPropsContainer: buttonProps = {
             buttonStyle: "primary",
             buttonTitle: "Decrement",
             buttonAction: () => counterStoreObject.manipulateCounterAction("DECREMENT_COUNTER", element)
         }
 
-        // Counter Reset Props 
+        // Button Counter Reset Props 
         const resetButtonPropsContainer: buttonProps = {
             buttonStyle: "danger",
             buttonTitle: "Reset",
@@ -47,7 +47,7 @@ const Counter: FC<propsType> = (props) => {
                 type="number"
                 value={counterStoreObject[element] ?? 0}
                 disabled
-            ></input>;
+            />;
         }
 
         return (

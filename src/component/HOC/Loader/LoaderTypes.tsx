@@ -5,4 +5,8 @@ interface loaderProps {
     show?: boolean
 }
 
-export type { interceptorProps, loaderProps }
+interface errorProps {
+    errorOnLoad?: boolean
+}
+
+export type { interceptorProps, loaderProps, errorProps }

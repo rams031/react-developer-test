@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { Dispatch, FC, SetStateAction } from 'react'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup';
 import shallow from 'zustand/shallow';
@@ -13,14 +13,17 @@ import { profileStore } from '../../../../utils/Zustand/ProfileStore/ProfileStor
 // Types
 import { profileFormType } from './CreateFormTypes';
 
-const CreateForm: FC = () => {
+
+const CreateForm: FC<{ setCreateView: Dispatch<SetStateAction<boolean>> }> = (props) => {
+    const { setCreateView } = props || {}
+
     // Global State 
     const { profileService } = profileStore((state) => state, shallow)
 
     // Create Profile Data Action
-    const createProfileDataAction = (values: profileFormType): Promise<void> | void => {
-        const updateServiceConfig: serviceTypes = { action: "CREATE_PROFILE_DATA", params: values }
-        return profileService(updateServiceConfig);
+    const createProfileDataAction = (values: profileFormType, actions: any): Promise<void> | void => {
+        const dispatchCreateAction: serviceTypes = { action: "CREATE_PROFILE_DATA", params: values, afterAction: actions.resetForm() }
+        return profileService(dispatchCreateAction);
     }
 
     // Form Values Object 
@@ -46,7 +49,7 @@ const CreateForm: FC = () => {
         )
     }
 
-    // User Create Form
+    // User Create Form Body
     const formBody = () => {
         return (
             <Formik
@@ -56,19 +59,19 @@ const CreateForm: FC = () => {
                 onSubmit={createProfileDataAction}
             >
                 <Form>
-                    <div className='grid grid-cols-3 gap-3'>
+                    <div className='flex flex-col gap-2'>
                         <InputField name={"email"} type={"email"} label={"Email Address :"} />
                         <InputField name={"firstName"} type={"text"} label={"First Name :"} />
                         <InputField name={"lastName"} type={"text"} label={"Last Name :"} />
                     </div>
-                    <div className='py-2'>
+                    <div className='flex flex-row gap-4 py-2'>
                         <Button buttonTitle={"Create User"} buttonStyle={"primary"} />
+                        <Button buttonTitle={"Back"} buttonStyle={"dark"} buttonAction={() => setCreateView(false)} />
                     </div>
                 </Form>
             </Formik>
         )
     }
-
 
     return (
         <div className='flex flex-col gap-4 justify-center items-center'>

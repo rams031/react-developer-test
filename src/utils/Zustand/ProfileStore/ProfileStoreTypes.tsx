@@ -12,11 +12,11 @@ interface profileLocationDetailsType {
 interface profileDetailsType {
     id?: string,
     title?: string,
-    firstName: string,
-    lastName: string,
+    firstName: string | undefined,
+    lastName: string | undefined,
     picture?: string,
     gender?: string,
-    email: string,
+    email: string | undefined,
     dateOfBirth?: string,
     phone?: string,
     location?: profileLocationDetailsType,
@@ -34,7 +34,7 @@ interface httpTypes extends serviceTypes { set: SetState<profileState> }
 
 interface profileState {
     profileData: profileDetailsType | null
-    profileService: ({ action, id, params }: serviceTypes) => Promise<void>
+    profileService: ({ action, id, params, afterAction }: serviceTypes) => Promise<void>
 }
 
 export type {

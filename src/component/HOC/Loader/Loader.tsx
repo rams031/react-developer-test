@@ -11,7 +11,7 @@ import { interceptorProps, loaderProps } from './LoaderTypes';
 const LoaderUI: FC<loaderProps> = (props) => {
     const { show } = props || {};
 
-    return !show ? (
+    return show ? (
         <div id="loader" className="z-10 fixed inset-0 bg-gray-100 min-h-screen flex flex-row gap-2 justify-center items-center">
             <div className="animate-bounce text-xl font-bold">●</div>
             <div className="animate-bounce text-xl font-bold">●</div>
@@ -23,17 +23,16 @@ const LoaderUI: FC<loaderProps> = (props) => {
 // HOC Function Loader
 const Loader: interceptorProps = WrappedComponent =>
     (props) => {
-        const [showLoader, setShowLoader] = useState<boolean>(false);
-
+        const [showLoader, setShowLoader] = useState<boolean>(true);
+        
         // HTTP Listener 
         API.interceptors.response.use(
             (response) => {
-                setShowLoader(true);
+                setShowLoader(false);
                 return response;
             },
             (error) => {
-                console.log(`error:`, error)
-                setShowLoader(true);
+                setShowLoader(false);
                 return Promise.reject(error);
             }
         )
