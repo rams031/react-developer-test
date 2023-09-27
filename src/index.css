@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.app {
+    @apply min-h-screen bg-gray-100 flex flex-col justify-center gap-10 p-5;
+}
+
+.primary {
+    @apply py-2 px-4 shadow rounded-lg text-white text-sm bg-blue-500
+}
+
+.card {
+    @apply flex flex-col gap-5 p-10 bg-white shadow rounded-lg
+}
+
+.warning {
+    @apply py-2 px-4 shadow rounded-lg text-white text-sm bg-yellow-500 
+}
+
+.success {
+    @apply py-2 px-4 shadow rounded-lg text-white text-sm bg-green-500 
+}
+
+.danger {
+    @apply py-2 px-4 shadow rounded-lg text-white text-sm bg-red-500 
+}
+
+.dark {
+    @apply py-2 px-4 shadow rounded-lg text-white text-sm bg-gray-600 
+}
+
+.light {
+    @apply py-2 px-4 shadow rounded-lg text-gray-800 bg-gray-100  hover:bg-gray-800 hover:text-white
+}
+
+.counter-main {
+    @apply flex flex-col py-10 gap-5 border-gray-100 border-2 p-10 rounded-lg
+}
+
+.userListCard {
+    @apply flex flex-row justify-center items-center gap-10 shadow rounded-lg bg-white p-3 my-2 hover:shadow-lg
+}
+
+.userListName {
+    @apply capitalize font-semibold
+}
+
+.userListImage {
+    @apply w-20 h-20 rounded-full shadow-lg
+}
+
+.userDetailsCard {
+    @apply bg-gray-100 py-2 px-5 rounded-lg
+}
+
+.userDetailsLabel {
+    @apply text-xs text-gray-700 font-medium
+}
+
+.userDetailsTitle {
+    @apply font-semibold text-gray-800
+}
+
+.userDetailsInput {
+    @apply py-1 px-2 border-2 rounded-lg my-1 bg-gray-50 disabled:bg-gray-100
+}
+
+.validateInput {
+    @apply text-xs text-red-600
+}
