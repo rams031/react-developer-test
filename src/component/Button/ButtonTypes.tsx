@@ -1,4 +1,4 @@
-interface buttonType {
+interface buttonProps {
     buttonStyle: "primary" | "dark" | "warning" | "success" | "light" | "danger";
     buttonTitle: string,
     form?: string,
@@ -6,4 +6,4 @@ interface buttonType {
     type?: "button" | "submit" | "reset" | undefined
 }
 
-export type { buttonType }
+export type { buttonProps }

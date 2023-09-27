@@ -5,14 +5,14 @@ import shallow from 'zustand/shallow';
 // Components
 import Loader from '../HOC/Loader/Loader';
 import Button from '../Button/Button';
+import CreateForm from '../Profile/Form/CreateForm/CreateForm';
 
 // Zutand Component
 import { userStore } from '../../utils/Zustand/UserStore/UserStore';
+import { profileStore } from '../../utils/Zustand/ProfileStore/ProfileStore';
 
 // Types
 import { userDataType } from './UserListTypes';
-import CreateForm from '../Profile/Form/CreateForm/CreateForm';
-import { profileStore } from '../../utils/Zustand/ProfileStore/ProfileStore';
 
 const UserList: FC = () => {
     const navigate = useNavigate();
@@ -52,9 +52,9 @@ const UserList: FC = () => {
                     </div>
                     <div className='flex flex-col gap-3'>
                         <div className='userListName'>
-                            {title ?? null}
-                            {firstName ?? null}
-                            {lastName ?? null}
+                            {title ?? null}{" "}
+                            {firstName ?? null}{" "}
+                            {lastName ?? null}{" "}
                         </div>
                         <div className='flex flex-row gap-2'>
                             <Button
@@ -83,7 +83,7 @@ const UserList: FC = () => {
 
     // User List Component Title Label
     const userListTitle = () => {
-        // Button Create User Form
+        // Button Create User Config
         const CreateUserButtonPropsContainer: buttonProps = {
             buttonStyle: "primary",
             buttonTitle: "Create User",
