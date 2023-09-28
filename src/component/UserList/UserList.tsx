@@ -13,13 +13,13 @@ import { profileStore } from '../../utils/Zustand/ProfileStore/ProfileStore';
 
 // Types
 import { userDataType } from './UserListTypes';
+import { userState } from '../../utils/Zustand/UserStore/UserStoreTypes';
 
 const UserList: FC = () => {
     const navigate = useNavigate();
 
     // Global State
-    const { userData, getUserDataAction } = userStore((state) => state, shallow);
-    const { profileService } = profileStore((state) => state, shallow);
+    const { userData, getUserDataAction }: userState = userStore((state) => state, shallow);
 
     // Local State
     const [createView, setCreateView] = useState<boolean>(false);

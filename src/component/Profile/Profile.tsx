@@ -12,13 +12,14 @@ import { profileStore } from '../../utils/Zustand/ProfileStore/ProfileStore';
 
 // Types 
 import { paramsType } from './ProfileTypes';
+import { profileState } from '../../utils/Zustand/ProfileStore/ProfileStoreTypes';
 
 const Profile: FC = () => {
     const navigate: NavigateFunction = useNavigate();
     const { profileId } = useParams() as Readonly<paramsType>;
 
     // Global State 
-    const { profileData, profileService } = profileStore((state) => state, shallow);
+    const { profileData, profileService }: profileState = profileStore((state) => state, shallow);
 
     // Pre Fetch Global Profile Data
     useEffect(() => {
@@ -57,7 +58,7 @@ const Profile: FC = () => {
                 <Button
                     buttonStyle={"danger"}
                     buttonTitle={"Delete Profile"}
-                    buttonAction={() => profileService({ action: "DELETE_PROFILE_DATA", id: profileId, afterAction: navigate("/")  })}
+                    buttonAction={() => profileService({ action: "DELETE_PROFILE_DATA", id: profileId, afterAction: navigate("/") })}
                 />
             </div>
         )
