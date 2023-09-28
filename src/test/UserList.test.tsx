@@ -1,20 +1,20 @@
 import axios from "axios";
-import { act, fireEvent, getByRole, render, screen } from "@testing-library/react"
-import MockAxios from "jest-mock-axios";
-import { getService } from "../service/API/HttpService/HttpService";
-import UserList from "../component/UserList/UserList";
+import { render, screen } from "@testing-library/react"
 
-jest.mock("axios", () => ({
-    __esModule: true,
-    default: {
-        interceptors: {
-            request: { use: jest.fn(() => { }) },
-            response: { use: jest.fn(() => { }) },
-        },
-    },
+// Components
+import UserList from "../component/UserList/UserList";
+import Loader from "../component/HOC/Loader/Loader";
+import { baseUrl } from "../service/API/Server/Server";
+
+// Zustand Component
+import { responseType } from "../utils/Zustand/UserStore/UserStoreTypes";
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => jest.fn()
 }));
 
-const mockResponse = {
+const userListGetAPISampleResponse: responseType = {
     data: {
         id: "1",
         title: "jordan",
@@ -27,13 +27,17 @@ const mockResponse = {
     total: 10
 }
 
-describe("Mock Axios Action", () => {
-    it("test axios user list get action", async () => {
-        const apiUrl: string = `${process.env.REACT_APP_API_PATH}/user?limit=1`
-        axios.get = jest.fn().mockResolvedValue(mockResponse)
+describe('Test Compoennt Loader', () => {
+    let ComponentWrapped: any;
 
-        const result = await axios.get(apiUrl);
-        expect(result).toEqual(mockResponse);
+    beforeEach(() => {
+        ComponentWrapped = Loader(UserList);
     });
-})
+
+    it('renders loading component when data has not been loaded yet', async () => {
+        render(<ComponentWrapped />);
+        const dotLoader = await screen.findAllByText("●");
+        expect(dotLoader).toHaveLength(6);
+    });
+});
 

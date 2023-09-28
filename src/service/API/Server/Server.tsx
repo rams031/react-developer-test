@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 // API Path
-const baseUrl: string = "https://dummyapi.io/data/v1/";
+export const baseUrl: string = "https://dummyapi.io/data/v1/";
 
 // API Header (Required)
-const appId: string = "65080fec01538513690ca63e";
+export const appId: string = "65080fec01538513690ca63e";
 
 const axiosConfig: AxiosRequestConfig = {
     baseURL: baseUrl,

@@ -1,4 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
+
+// Component
 import Counter from "../component/Counter/Counter"
 
 let counterValue: HTMLInputElement

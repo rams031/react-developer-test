@@ -81,8 +81,8 @@ const UserList: FC = () => {
         ) : null
     }
 
-    // User List Component Title Label
-    const userListTitle = () => {
+    // Navigate Create User Create Form
+    const createUserButtonDisplay = () => {
         // Button Create User Config
         const CreateUserButtonPropsContainer: buttonProps = {
             buttonStyle: "primary",
@@ -100,7 +100,7 @@ const UserList: FC = () => {
     return (
         <div>
             {createProfileForm()}
-            {userListTitle()}
+            {createUserButtonDisplay()}
             {UserListData()}
         </div>
     )

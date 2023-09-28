@@ -23,22 +23,26 @@ const LoaderUI: FC<loaderProps> = (props) => {
 // HOC Function Loader
 const Loader: interceptorProps = WrappedComponent =>
     (props) => {
+
+        // Hide Loader Show Default
         const [showLoader, setShowLoader] = useState<boolean>(true);
         
         // HTTP Listener 
         API.interceptors.response.use(
             (response) => {
+                // Hide Loader
                 setShowLoader(false);
                 return response;
             },
             (error) => {
+                // Hide Loader
                 setShowLoader(false);
                 return Promise.reject(error);
             }
         )
 
         return (
-            <div>
+            <div role="loader" id="loader">
                 <LoaderUI show={showLoader} />
                 <WrappedComponent {...props} showPage={showLoader} />
             </div>
